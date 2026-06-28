@@ -52,7 +52,7 @@ So the break is at **cell 1**, before any deep-learning code even runs.
 | computational performance | 5 |  |  | 3 |
 | computer vision | 13 | 1 |  | 1 |
 | convolutional modern ✅ **fixed** | 0 | 8\* |  | 1 |
-| convolutional neural networks | 4 | 1 |  | 2 |
+| convolutional neural networks ✅ **fixed** | 0 | 5 |  | 2 |
 | gaussian processes | 2 |  |  | 2 |
 | generative adversarial networks | 2 |  |  | 1 |
 | hyperparameter optimization | 5 |  |  | 1 |
@@ -68,7 +68,7 @@ So the break is at **cell 1**, before any deep-learning code even runs.
 | recurrent neural networks | 6 |  |  | 2 |
 | reinforcement learning | 2 |  |  | 2 |
 | introduction / installation / notation / preface / references / root | | 1 | | 6 |
-| **TOTAL (192)** | **108** | **22** | **9** | **53** |
+| **TOTAL (192)** | **104** | **26** | **9** | **53** |
 
 \* The entire **`chapter_convolutional-modern`** chapter (AlexNet, VGG, NiN,
 GoogLeNet, batch-norm, ResNet/ResNeXt, DenseNet, RegNet/cnn-design — 8 notebooks)
