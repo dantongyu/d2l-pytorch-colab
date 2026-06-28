@@ -37,24 +37,24 @@ with newer pandas/matplotlib that this test surfaced and fixed:
 | `appendix-mathematics/distributions` | matplotlib removed the `stem(use_line_collection=…)` kwarg | drop the kwarg (now the default) |
 | `appendix-mathematics/random-variables` | same `stem(use_line_collection=…)` | drop the kwarg |
 
-### Remaining 10 non-passing — all pre-existing, none caused by `--no-deps`
+### Additionally fixed for standalone Colab (opt-in cells)
+
+| Notebooks | Was | Fix |
+| --- | --- | --- |
+| 7 computer-vision (`anchor`, `bounding-box`, `fcn`, `image-augmentation`, `multiscale-object-detection`, `neural-style`, `ssd`) | read bundled `../img/*.jpg`, absent in a lone Colab notebook | a small cell fetches just the needed images from this repo's `img/` on `main` |
+| `reinforcement-learning/{qlearning, value-iter}` | d2l's RL helpers target gym 0.21 (`env.nS/nA/seed`), broken on Py3.12/NumPy 2 | a cell installs `gym==0.25.2`, shims `np.bool8`, and re-points `d2l.make_env` to a modern-API equivalent — lesson code unchanged |
+
+Both were validated end-to-end in a fresh kernel with **no `../img` present** (CV
+images download successfully) and **0 errors** (RL notebooks produce their value/
+Q-function plots).
+
+### Remaining non-passing — pre-existing, none caused by `--no-deps`
 
 | Notebooks | Category | Happens on Colab? |
 | --- | --- | --- |
 | `builders-guide/use-gpu`, `computational-performance/{multiple-gpus, multiple-gpus-concise, auto-parallelism}` | **Need ≥2 GPUs** (`X.cuda(1)`, etc.) | Yes on a single-GPU runtime — inherent to the lesson; use a multi-GPU runtime |
 | `hyperparameter-optimization/{rs-async, sh-async}` | **syne-tune** — the notebook self-installs it via its own `pip install 'syne-tune[extra]'` cell | No — works on Colab; only our offline test env lacked it |
 | `nlp-pretraining/{bert-dataset, bert-pretraining}` | **Dead dataset URL** — d2l's hardcoded wikitext-2 link (`research.metamind.io`) now returns an error page, not a zip | Yes — upstream dataset rot; needs a working mirror |
-| `reinforcement-learning/{qlearning, value-iter}` | **gym** not installed by the notebook + uses the removed `env.seed()` API (gym ≥ 0.26) | Yes — upstream gym-version drift |
-
-### Standalone-Colab caveat: bundled images
-
-These 7 computer-vision notebooks read bundled images via `../img/*.jpg`:
-`anchor`, `bounding-box`, `fcn`, `image-augmentation`,
-`multiscale-object-detection`, `neural-style`, `ssd`. They **pass when the repo's
-`img/` folder is present** (e.g. `git clone` the repo in Colab), but a lone
-"Open in Colab" notebook has no `../img`, so the image cell errors. This is
-pre-existing and unrelated to the d2l install. Fix options if needed: clone the
-repo in Colab, or prepend a cell that fetches the specific images.
 
 ## Bottom line
 
